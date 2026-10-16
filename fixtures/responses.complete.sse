@@ -1,0 +1,14 @@
+: synthetic fixture, not live usage
+
+event: response.created
+data: {"type":"response.created","sequence_number":0,"response":{"id":"resp_fixture_001","status":"in_progress","usage":null}}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":1,"item_id":"msg_fixture_001","output_index":0,"content_index":0,"delta":"你好，"}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":2,"item_id":"msg_fixture_001","output_index":0,"content_index":0,"delta":"转发测试完成。"}
+
+event: response.completed
+data: {"type":"response.completed","sequence_number":3,"response":{"id":"resp_fixture_001","object":"response","created_at":1791079200,"status":"completed","model":"fixture-text-v1","output":[{"type":"message","id":"msg_fixture_001","role":"assistant","status":"completed","content":[{"type":"output_text","text":"你好，转发测试完成。","annotations":[]}]}],"usage":{"input_tokens":10000,"input_tokens_details":{"cached_tokens":4000,"cache_write_tokens":0},"output_tokens":1000,"output_tokens_details":{"reasoning_tokens":300},"total_tokens":11000}}}
+

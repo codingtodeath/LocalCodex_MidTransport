@@ -1,0 +1,554 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CodexRelayTelemetryV1",
+  "description": "项目自定义白名单协议。生产拒绝source=mock。外层限制64KiB。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "protocol_version": {
+      "const": "1.0"
+    },
+    "worker_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]{1,48}$"
+    },
+    "instance_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "responses_http": {
+          "type": "boolean"
+        },
+        "responses_nonstream": {
+          "type": "boolean"
+        },
+        "quota_read": {
+          "type": "boolean"
+        },
+        "account_usage_read": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "responses_http",
+        "responses_nonstream",
+        "quota_read",
+        "account_usage_read"
+      ]
+    },
+    "local": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bridge_ready": {
+          "type": "boolean"
+        },
+        "adapter_status": {
+          "type": "string",
+          "enum": [
+            "running",
+            "stopped",
+            "error"
+          ]
+        },
+        "adapter_ready": {
+          "type": "boolean"
+        },
+        "auth_state": {
+          "type": "string",
+          "enum": [
+            "ready",
+            "reauth_required",
+            "unknown"
+          ]
+        },
+        "active_requests": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "last_inference_success_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "bridge_ready",
+        "adapter_status",
+        "adapter_ready",
+        "auth_state",
+        "active_requests",
+        "last_inference_success_at"
+      ]
+    },
+    "quota": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "ok",
+                "unsupported",
+                "reauth_required",
+                "unavailable",
+                "account_mismatch"
+              ]
+            },
+            "source": {
+              "type": "string",
+              "enum": [
+                "codex_app_server",
+                "none",
+                "mock"
+              ]
+            },
+            "captured_at": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "last_attempt_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "account_epoch": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "account_alias": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 48
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "identity_check": {
+              "type": "string",
+              "enum": [
+                "automatic_match",
+                "manual_confirmed",
+                "unverified",
+                "mismatch"
+              ]
+            },
+            "plan_type": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 64
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "windows": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "bucket_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 96
+                  },
+                  "window_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 96
+                  },
+                  "display_name": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "maxLength": 96
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "used_percent": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "window_minutes": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "resets_at": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "bucket_id",
+                  "window_id",
+                  "display_name",
+                  "used_percent",
+                  "window_minutes",
+                  "resets_at"
+                ]
+              },
+              "maxItems": 64
+            },
+            "credits": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "available": {
+                      "anyOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "unlimited": {
+                      "anyOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "balance": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^-?[0-9]+(?:\\.[0-9]+)?$",
+                          "maxLength": 64
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "unit": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "credits"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "available",
+                    "unlimited",
+                    "balance",
+                    "unit"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "error_code": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 64,
+                  "pattern": "^[a-z0-9_]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "source",
+            "captured_at",
+            "last_attempt_at",
+            "account_epoch",
+            "account_alias",
+            "identity_check",
+            "plan_type",
+            "windows",
+            "credits",
+            "error_code"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "ok"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "captured_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "account_epoch": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "identity_check": {
+                    "type": "string",
+                    "enum": [
+                      "automatic_match",
+                      "manual_confirmed"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "account_usage": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "captured_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "scope": {
+              "const": "upstream_account_summary"
+            },
+            "summary": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "lifetime_tokens": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "peak_daily_tokens": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "longest_running_turn_seconds": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "current_streak_days": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "longest_streak_days": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "lifetime_tokens",
+                "peak_daily_tokens",
+                "longest_running_turn_seconds",
+                "current_streak_days",
+                "longest_streak_days"
+              ]
+            },
+            "daily_buckets": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "maxItems": 90,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "start_date": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "tokens": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "start_date",
+                      "tokens"
+                    ]
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "captured_at",
+            "scope",
+            "summary",
+            "daily_buckets"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "command_results": {
+      "type": "array",
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "done",
+              "failed",
+              "expired"
+            ]
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "pattern": "^[a-z0-9_]+$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "error_code"
+        ]
+      }
+    }
+  },
+  "required": [
+    "protocol_version",
+    "worker_id",
+    "instance_id",
+    "seq",
+    "sent_at",
+    "capabilities",
+    "local",
+    "quota",
+    "account_usage",
+    "command_results"
+  ]
+}

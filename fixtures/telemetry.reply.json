@@ -1,0 +1,12 @@
+{
+  "protocol_version": "1.0",
+  "ack_seq": 12,
+  "server_time": "2026-10-04T02:00:00Z",
+  "commands": [
+    {
+      "id": "5b52ef0a-d15f-4f68-a3da-91c1dfc677d0",
+      "type": "refresh_quota",
+      "expires_at": "2026-10-04T02:01:00Z"
+    }
+  ]
+}

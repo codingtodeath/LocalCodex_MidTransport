@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codex-relay-server"
+version = "1.0.0"
+description = "Codex 私有订阅中继 —— Ubuntu Gateway、计量、额度快照与监控网站"
+requires-python = ">=3.11"
+license = { text = "Proprietary" }
+# 依赖版本见仓库根目录 requirements.lock（固定版本部署）。
+dependencies = [
+  "fastapi==0.115.6",
+  "uvicorn==0.34.0",
+  "httpx==0.28.1",
+  "pydantic==2.10.4",
+  "jsonschema==4.23.0",
+]
+
+[project.scripts]
+codex-relay = "codex_relay.cli:main"
+
+[tool.setuptools]
+packages = ["codex_relay"]
+
+[tool.setuptools.package-data]
+codex_relay = ["migrations/*.sql", "web/dist/*", "web/dist/assets/*"]

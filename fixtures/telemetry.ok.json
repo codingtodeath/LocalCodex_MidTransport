@@ -1,0 +1,53 @@
+{
+  "protocol_version": "1.0",
+  "worker_id": "home-windows",
+  "instance_id": "f4f209d7-d3ef-4b9c-9c98-5fc8b94f7e86",
+  "seq": 12,
+  "sent_at": "2026-10-04T02:00:00Z",
+  "capabilities": {
+    "responses_http": true,
+    "responses_nonstream": true,
+    "quota_read": true,
+    "account_usage_read": false
+  },
+  "local": {
+    "bridge_ready": true,
+    "adapter_status": "running",
+    "adapter_ready": true,
+    "auth_state": "ready",
+    "active_requests": 0,
+    "last_inference_success_at": "2026-10-04T01:59:45Z"
+  },
+  "quota": {
+    "status": "ok",
+    "source": "mock",
+    "captured_at": "2026-10-04T01:59:00Z",
+    "last_attempt_at": "2026-10-04T01:59:00Z",
+    "account_epoch": "a2a973fe-0c86-4f4d-87c4-78d5f031dbae",
+    "account_alias": "合成测试账号",
+    "identity_check": "manual_confirmed",
+    "plan_type": null,
+    "windows": [
+      {
+        "bucket_id": "fixture-codex",
+        "window_id": "primary",
+        "display_name": "测试主窗口",
+        "used_percent": 25,
+        "window_minutes": 300,
+        "resets_at": "2026-10-04T04:00:00Z"
+      },
+      {
+        "bucket_id": "fixture-codex",
+        "window_id": "secondary",
+        "display_name": "测试次窗口",
+        "used_percent": 60,
+        "window_minutes": 10080,
+        "resets_at": "2026-10-08T04:00:00Z"
+      }
+    ],
+    "credits": null,
+    "error_code": null
+  },
+  "account_usage": null,
+  "command_results": []
+}

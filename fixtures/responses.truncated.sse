@@ -1,0 +1,13 @@
+: synthetic fixture, not live usage
+
+event: response.created
+data: {"type":"response.created","sequence_number":0,"response":{"id":"resp_fixture_001","status":"in_progress","usage":null}}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":1,"item_id":"msg_fixture_001","output_index":0,"content_index":0,"delta":"你好，"}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":2,"item_id":"msg_fixture_001","output_index":0,"content_index":0,"delta":"转发测试完成。"}
+
+event: response.completed
+data: {"type":"response.com

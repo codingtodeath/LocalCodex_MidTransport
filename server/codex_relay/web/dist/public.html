@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>用量概览 · Codex Relay</title>
+  <link rel="stylesheet" href="/assets/public.css?v=20261012-processing">
+  <script src="/assets/public.js?v=20261012-processing" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-symbol">C</span>Codex Relay</a>
+    <p class="nav-caption">控制台</p>
+    <nav aria-label="主导航">
+      <a class="active" href="/"><span>◫</span>用量概览</a>
+      <a href="/quota"><span>◷</span>账号额度 <small>需登录</small></a>
+      <a href="/requests"><span>≡</span>请求流水 <small>需登录</small></a>
+      <a href="/settings"><span>⚙</span>管理设置 <small>需登录</small></a>
+    </nav>
+    <div class="sidebar-foot"><span class="live-dot"></span>公开汇总<br><small>详细数据需要管理员登录</small></div>
+  </aside>
+  <div class="main-area">
+    <header class="topbar"><span>控制台 / <b>用量概览</b></span><a class="button secondary" href="/quota">管理员登录 ↗</a></header>
+    <main>
+      <div class="heading"><div><h1>用量概览</h1><p>查看中继用量与账号额度消耗趋势</p></div><div class="heading-status"><span id="processing-status" class="processing-status" role="status" title="已进入中转、尚未结束的请求；包含等待上游和流式输出，每 2 秒更新">正在处理：暂不可确认</span><span id="relay-status" class="relay-status unknown" role="status">● 中继状态待确认</span><span class="public-label">公开页面</span></div></div>
+      <section class="toolbar" aria-label="统计筛选">
+        <div class="range-switch" role="group" aria-label="日期范围">
+          <button data-range="today" aria-pressed="true" class="selected">今天</button>
+          <button data-range="yesterday" aria-pressed="false">昨天</button>
+          <button data-range="7d" aria-pressed="false">近 7 天</button>
+          <button data-range="30d" aria-pressed="false">近 30 天</button>
+        </div>
+        <div class="toolbar-right"><span id="date-range">Asia/Hong_Kong · UTC+8</span><button id="refresh" class="button secondary">↻ 刷新</button></div>
+      </section>
+      <p id="connection" role="status" aria-live="polite">正在加载汇总数据…</p>
+      <section id="metrics" class="metrics" aria-label="用量汇总"><div class="metric skeleton">正在加载…</div></section>
+      <div class="quota-section-heading"><h2>当前账号额度</h2><span>当前快照 · 不受日期筛选影响</span></div>
+      <section id="quota-cards" class="quota-cards" aria-label="当前额度与预计重置时间"><article class="metric skeleton">正在加载额度快照…</article></section>
+      <section class="panel">
+        <div class="panel-heading"><div><h2>用量趋势</h2><p id="chart-description">按小时查看消耗</p></div><div class="chart-controls">
+          <label>指标<select id="metric"><option value="quota">额度消耗</option><option value="tokens">Token 用量</option><option value="requests">请求数</option></select></label>
+          <label id="window-label">窗口<select id="window"></select></label>
+          <label>粒度<select id="granularity"><option value="hour">每小时</option><option value="day">每天</option></select></label>
+        </div></div>
+        <div id="chart" class="chart" aria-live="polite"><p class="empty">正在加载…</p></div>
+        <div class="chart-footer"><span id="chart-note">额度按账号快照统计，Token 按本网关请求统计。</span><button id="table-toggle" class="text-button" aria-expanded="false">查看数据表</button></div>
+        <div id="data-table" class="table-wrap" hidden></div>
+      </section>
+      <section class="panel explanation"><div><span class="info-icon">i</span><h2>统计口径</h2></div>
+        <p><b>额度消耗</b>来自账号额度快照的已用比例变化，包含其他 Codex 设备消耗。累计以“百分点”计，可跨重置周期超过 100；不是当前剩余额度。</p>
+        <p>小时消耗按后一次快照所在小时计入。快照间隔超过 15 分钟、比例回退或窗口重置时不推算，图中空档表示数据不足；有数据的时段也可能只覆盖部分时间。</p>
+        <p><b>Token 用量</b>仅汇总本网关上游已报告的请求用量。未报告或存在冲突的用量不计入；“保留流水累计”只覆盖服务器仍保留的请求记录，不代表账号所有历史用量。</p>
+      </section>
+      <footer>Codex Relay <span>统计时区 UTC+8 · 页面每 10 秒自动更新 · 账号细节与管理操作需登录</span></footer>
+    </main>
+  </div>
+  <noscript><p>请启用 JavaScript 查看用量；详细额度可访问 <a href="/quota">管理员页面</a>。</p></noscript>
+</body>
+</html>

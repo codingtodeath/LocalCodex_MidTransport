@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "server": {
+    "host": "relay.example.com",
+    "ssh_port": 22,
+    "ssh_user": "codex-tunnel",
+    "host_fingerprint": "REPLACE_WITH_VERIFIED_ED25519_FINGERPRINT",
+    "worker_id": "workstation",
+    "telemetry_url": "https://relay.example.com/internal/v1/telemetry",
+    "models_allowlist": ["REPLACE_WITH_VERIFIED_MODEL_ID"],
+    "max_concurrency": 4
+  },
+  "diagnostics": {
+    "capture_request_inputs": false,
+    "capture_incident_bodies": false
+  }
+}

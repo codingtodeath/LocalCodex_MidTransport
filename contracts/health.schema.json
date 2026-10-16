@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CodexRelayHealthV1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "protocol_version": {
+      "const": "1.0"
+    },
+    "worker_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]{1,48}$"
+    },
+    "instance_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "local": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bridge_ready": {
+          "type": "boolean"
+        },
+        "adapter_status": {
+          "type": "string",
+          "enum": [
+            "running",
+            "stopped",
+            "error"
+          ]
+        },
+        "adapter_ready": {
+          "type": "boolean"
+        },
+        "auth_state": {
+          "type": "string",
+          "enum": [
+            "ready",
+            "reauth_required",
+            "unknown"
+          ]
+        },
+        "active_requests": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "last_inference_success_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "bridge_ready",
+        "adapter_status",
+        "adapter_ready",
+        "auth_state",
+        "active_requests",
+        "last_inference_success_at"
+      ]
+    }
+  },
+  "required": [
+    "protocol_version",
+    "worker_id",
+    "instance_id",
+    "observed_at",
+    "local"
+  ]
+}

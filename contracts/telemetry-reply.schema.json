@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CodexRelayTelemetryReplyV1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "protocol_version": {
+      "const": "1.0"
+    },
+    "ack_seq": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "server_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "commands": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "const": "refresh_quota"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "expires_at"
+        ]
+      }
+    }
+  },
+  "required": [
+    "protocol_version",
+    "ack_seq",
+    "server_time",
+    "commands"
+  ]
+}
